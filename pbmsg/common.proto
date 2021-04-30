@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package msg;
+
+option go_package = "share/netmsg";
+
+//item道具信息
+message ItemInfo  {
+	int64 ID = 1;			//道具uid
+	int32 DataId = 2;			//data配置表id
+	int32 ItemCnt = 3;		//item数量
+}
+
+//player信息
+message UserInfo  {
+	int64 UserId = 1;			//玩家uid
+	int64 Gold =2;				//金币
+	int64 Coin = 3;				//积分
+	int64 Money = 4;			//钻石
+	string NickName = 5;		//昵称
+}
+
+//邮件信息
+message MailInfo {
+	int64 ID = 1;		//邮件uid
+	int64 Sender = 2;	//发送者(0:系统，其他:群发邮件的群邮件uid)
+	int64 Recver = 3;	//接受者userid（-1代表群发邮件）
+	string Title = 4;  	//邮件标题
+	string Content = 5;	//邮件内容
+	int32 DataId = 6;	//道具配置表id		//附件
+	int32 Flag = 7;		//邮件标识(bit(0):已领取
+	int64 SendTime = 8; //发送时间
+}
+
+//任务信息
+message TaskInfo  {
+	int32 DataId = 1;			//数据配置表id
+	int32 Cur = 2;				//任务进度
+	int32 Flag = 3;				//任务标识(bit(0):已完成, bit(1):已领取)
+}

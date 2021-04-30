@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package msg;
+
+option go_package = "share/netmsg";
+
+//请求加入房间
+message C_Z_JoinRoom {
+	int32 RoomDataId = 1;			//房间配置表id
+	int32 WorldUid = 2;				//world server uid
+	int64 UserId = 3;			
+}
+
+message Z_C_JoinRoom {
+	int32 ErrCode = 1;
+	int32 RoomDataId = 2;			//房间配置表id
+}
+
+message PoRecordItem {		//战斗记录
+	int64 OpTime = 1;		//命令时间
+	bytes Buffer = 2;		//命令内容
+	string Name = 3;		//命令名字
+}
+
+message PoRecords {		//战斗记录
+	repeated PoRecordItem Items = 1;		//命令内容集合，按顺序
+}
+
+message Z_C_RoomData {		//当前房间数据,断线重连
+	int32 DataId = 1;	//当前出怪配置数据
+}
+
+message C_Z_ReadyGo {				//准备进度
+	int32 Progress = 1;	//准备进度,100代表准备完成
+}
+
+message Z_C_ReadyGo {
+	int32 Progress = 1;	//准备进度,100代表准备完成
+	int64 UserId = 2;
+}
+
+message C_Z_Attack {		//普通攻击
+	repeated int32 Targets = 1;		//目标id
+}
+
+message Z_C_Attack {		//普通攻击
+	repeated int32 Targets = 1 ;		//目标id
+	repeated int32 Hps = 2;		//目标剩余血量
+}
+
+message C_Z_Spell {		//释放技能
+	repeated int32 Targets = 1;		//目标id
+}
+
+message Z_C_Spell {		//释放技能
+	repeated int32 Targets = 1;		//目标id
+	repeated int32 Hps = 2;		//目标剩余血量
+}
+
+

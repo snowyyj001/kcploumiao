@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+import "pbmsg/common.proto";
+
+package msg;
+
+option go_package = "share/netmsg";
+
+//心跳
+message C_S_C_Heart_Beat {
+	int64 TokenId = 1;
+	int64 UserId = 2;
+}
+
+//请求登录大厅
+message C_S_Login {
+	int64 TokenId = 1;			//account返回的tokenid	
+	int64 UserId = 2;			//account返回的userid
+	int64 VersionCode = 3;		//客户端版本号
+}
+
+message S_C_Login {
+	int32 ErrCode = 1;
+	int64 UserId = 2;
+	int32 Sex = 3;
+	int64 ActiveFlag = 4;
+	int64 Gold =5;
+	int64 Coin = 6;
+	int64 Money = 7;
+	int32 RoomUid = 8;		//如果正在游戏中
+}
+
+//请求加入房间
+message C_S_EnterRoom {
+	int32 RoomDataId = 1;			//房间配置表id
+}
+
+message S_C_EnterRoom {
+	int32 ErrCode = 1;
+	int32 RoomDataId = 2;			//房间配置表id
+	int32 Uid = 3;					//zone服务uid
+	string SAddr = 4;		//zone的监听地址
+}
+
+//房间异常关闭
+message S_C_RoomClosed {
+	int32 RomUid = 1;
+}
+
+//邮件列表
+message S_C_AllMails {
+	repeated MailInfo Mails = 1;		//邮件列表
+}
+
+//领取邮件
+message C_S_RecvMails {
+	int64 MailUid = 1;			//邮件uid（-1代表一键领取，一次最多领取5封）
+}
+
+message S_C_RecvMails {
+	int32 ErrCode = 1;
+	repeated int64 MailUIds = 2;		//邮件Uid列表
+}
+
+//服务器主动推送邮件
+message S_C_UpdateMail {		
+	MailInfo Mail = 1;		//邮件
+}
+
+//删除邮件
+message C_S_DelMails {
+	repeated int64 MailUids = 1;			//邮件uid列表
+}
+
+message S_C_DelMails {
+	int32 ErrCode = 1;
+	repeated int64 MailUids = 2;		//邮件Uid列表
+}
+
+//排行榜数据
+message RankItem {
+	int32 Id = 1;		//排名（0开头）
+	int64 Score = 2;		//积分
+	int64 Uid = 3;		//玩家uid
+	string NickName = 4;	//昵称
+	string HeadIcon = 5;	//头像
+}
+
+//请求排行榜数据
+message C_S_LoadRank {
+	int32 Type = 1;	//排行榜类型
+}
+
+message S_C_LoadRank {
+	int32 Type = 1;	//排行榜类型
+	repeated RankItem Items = 2;	//数据
+}
+
+//游戏公告
+message S_C_BoardMsg {
+	int32 Type = 1;	//公告类型0:普通消息，1：弹出框消息
+	string Content = 2;	//公告内容
+}
+
+//任务列表
+message S_C_AllTasks {
+	repeated TaskInfo Tasks = 1;		//任务列表
+}
+
+//服务器主动推送任务
+message S_C_UpdateTask {		
+	TaskInfo Task = 1;		//任务
+}
+

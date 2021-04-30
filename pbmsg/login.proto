@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package msg;
+
+option go_package = "share/netmsg";
+
+	
+message C_A_Login {
+	string AccountName = 1;		
+	string Password = 2;
+	int32 Channel = 3;		//登录渠道1,2,3,...
+	int32 LoginType = 4;	//登录类型:游客1，微信2，QQ3，手机4，
+	string HeadIcon = 5;
+	int32 Sex = 6;
+	string NickName = 7;
+}
+
+message A_C_Login {
+	int32 ErrCode = 1;
+	int64 UserId = 2;
+	int64 TokenId = 3;		//登录gate用
+	string GateAddr = 4;	//gate地址
+	int32 WorldId = 5;		//world服务id
+}
